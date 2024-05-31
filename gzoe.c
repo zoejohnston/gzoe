@@ -1,7 +1,7 @@
 /* gzoe.c
 
-   Based on starter code by Bill Bird.
    Oversees collection of input into blocks and block writing.
+   Based on code by Bill Bird for outputting blocks of type 0 in Gzip format.
 
    Zoe Johnston - 2023/06/25
 */
@@ -24,7 +24,7 @@ uint16_t dist_code_table[2][32];
 
 /* Function Declaration */
 
-/* From Bill Bird's starter code. Pushes a basic gzip header. 
+/* Pushes a basic gzip header. Code by Bill Bird. 
  */
 void push_gzip_header(bitstream_t* stream) {
     unsigned char initial_bytes[] = {0x1f, 0x8b,
@@ -345,7 +345,7 @@ void block_1(bitstream_t* stream, uint16_t* contents, uint32_t block_size) {
     bitstream_push_encoding(stream, code, bits); 
 }
 
-/* From Bill Bird's starter code. Pushes a block of type 0. 
+/* Pushes a block of type 0. Code by Bill Bird.
  */
 uint32_t block_0(bitstream_t* stream, uint8_t* contents, uint32_t block_size) {
     bitstream_push_bits(stream, 0, 2);
@@ -387,7 +387,7 @@ uint32_t write_block(bitstream_t* stream, window_t* window, uint8_t* contents, u
 }
 
 /* Initializes the bitstream, default code tables, and sliding window. Collects a block of size MAX_BLOCK_SIZE
- * and then pushes that block.
+ * and then pushes that block. Based on code by Bill Bird.
  */
 int main() {
     bitstream_t stream;
