@@ -1,6 +1,6 @@
 # Gzip Style Data Compression
 
-This compressor is designed such that it can be used interchangeably with gzip. That is, gzip can be used to decompress files produced by this compressor. Like gzip, my compression uses two compression techniques: LZSS and prefix coding.
+This compressor is designed such that it can be used interchangeably with gzip. That is, gzip can be used to decompress files produced by this compressor. My compressor uses the DEFLATE algorithm to achieve compression. This algorithm makes use of two compression techniques: LZSS and prefix coding.
 
 My implementation is broken up into a few different files. Functions relating to LZSS are found in *lzss.c* and functions relating to prefix coding are found in *prefix_code.c*. The file *gzoe.c* imports the headers for both of these files. Headers for outside code are also imported by *gzoe.c*. These include the *output_steam* files by Bill Bird, and CRC++ by Daniel Bahr. More detailed citation can be found in each file.
 
