@@ -6,7 +6,7 @@ My implementation is broken up into a few different files. Functions relating to
 
 ## Compression Ratio and Speed
 
-My implementation can compress the entire collection of test data that I used with a compression ratio higher than gzip -1 for every piece of test data. It is able to compress the entire collection of test data, including but not limited to both the Canterbury and Calgary corpus (about 20MB of data), in under 15 seconds.
+My implementation can compress the entire collection of test data that I used with a compression ratio higher than gzip -1 for every piece of test data. It is able to compress the entire collection of test data, including but not limited to both the Canterbury and Calgary corpus, in under 10 seconds.
 
 ## LZSS
 
