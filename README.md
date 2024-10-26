@@ -1,18 +1,18 @@
 # Gzip Style Data Compression
 
-This compressor is designed such that it can be used interchangeably with gzip. That is, gzip can be used to decompress files produced by this compressor. My compressor uses the DEFLATE algorithm to achieve compression. This algorithm makes use of two compression techniques: LZSS and prefix coding.
+This compressor is designed such that it can be used interchangeably with gzip. That is, gzip can be used to decompress files produced by this compressor. The compressor uses the DEFLATE algorithm, making use of two compression techniques: LZSS and prefix coding.
 
 My implementation is broken up into a few different files. Functions relating to LZSS are found in *lzss.c* and functions relating to prefix coding are found in *prefix_code.c*. The file *gzoe.c* imports the headers for both of these files. Headers for outside code are also imported by *gzoe.c*. These include the *output_steam* files by Bill Bird, and CRC++ by Daniel Bahr. More detailed citation can be found in each file.
 
 ## Compression Ratio and Speed
 
-My implementation can compress the entire collection of test data that I used with a compression ratio higher than gzip -1 for every piece of test data. It is able to compress the entire collection of test data, including but not limited to both the Canterbury and Calgary corpus, in under 10 seconds.
+My test data was comprised mainly of the Canterbury and Calgary corpuses. My implementation is able achieve a compression ratio higher than gzip -1 for every piece of test data and it is able to compress the entire collection of test data in under 10 seconds.
 
 ## LZSS
 
-Like other Lempel-Ziv schemes, LZSS uses backreferences. To this end, the compressor maintains a sliding window of stored bytes as it works through the file input from stdin. I used the suspension bridge approach to speed up my backreference lookups.
+Like other Lempel-Ziv schemes, LZSS uses backreferences. To this end, the compressor maintains a sliding window of stored bytes as it works through the file input from stdin. I used a "suspension bridge" approach to speed up my backreference lookups.
 
-My code uses an array of size 33026 to hold the characters in the future and past. That is, 32768 spots for past characters and 258 spots for future characters. As new characters are introduced, they overwrite characters that have moved out of the sliding window. It also maintains two arrays, one of size 33026 and one of size 256, to keep track of indices in the char array. The array of size 256 has an entry corresponding to each character. If the character has not yet been encountered, it contains a NIL value (a value defined at the top of *lzss.h*). Otherwise, it contains the index of the char array where that character was most recently seen in the character array. Similarly, the arrray of size 33026 has entries which correspond to the character array and contain the previous index that the character at that index is seen at. As characters leave the window, their corresponding entries are set to NIL.
+My code uses a char array of size 33026 for the sliding window. This array contains 32768 past characters and 258 future characters. As new characters are introduced, they overwrite characters that have moved out of the sliding window. Two additional arrays, one of size 33026 and one of size 256, keep track of indices in the char array. The array of size 256 has an entry corresponding to each character. If the character has not yet been encountered, it contains a NIL value (a value defined at the top of *lzss.h*). Otherwise, it contains the index of the char array where that character was most recently seen in the character array. Similarly, the arrray of size 33026 has entries which correspond to the character array and contain the previous index that the character at that index is seen at. As characters leave the window, their corresponding entries are set to NIL.
 
 When searching for a backreference, the *find_backreference* function first checks the array of size 256 to see where the current character most recently occured. It then uses the array of size 33026 to iterate through the rest of the occurences of that character. At each occurence, it checks to see if a backreference could be generated and if that backreference would be longer than any found thus far. To ensure timeliness, the *find_backreference* function will iterate a maximum of 500 times. 
 
