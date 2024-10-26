@@ -4,6 +4,13 @@ This compressor is designed such that it can be used interchangeably with gzip. 
 
 My implementation is broken up into a few different files. Functions relating to LZSS are found in *lzss.c* and functions relating to prefix coding are found in *prefix_code.c*. The file *gzoe.c* imports the headers for both of these files. Headers for outside code are also imported by *gzoe.c*. These include the *output_steam* files by Bill Bird, and CRC++ by Daniel Bahr. More detailed citation can be found in each file.
 
+To use the compressor, run the following commands. 
+
+```
+make
+./gzoe < file_to_compress.txt > compressed_file.gz
+```
+
 ## Compression Ratio and Speed
 
 My test data was comprised mainly of the Canterbury and Calgary corpuses. My implementation is able achieve a compression ratio higher than gzip -1 for every piece of test data and it is able to compress the entire collection of test data in under 10 seconds.
