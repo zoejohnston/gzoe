@@ -4,10 +4,9 @@ This compressor is designed such that it can be used interchangeably with gzip. 
 
 My implementation is broken up into a few different files. Functions relating to LZSS are found in *lzss.c* and functions relating to prefix coding are found in *prefix_code.c*. The file *gzoe.c* imports the headers for both of these files. Headers for outside code are also imported by *gzoe.c*. These include the *output_steam* files by Bill Bird, and CRC++ by Daniel Bahr. More detailed citation can be found in each file.
 
-To use the compressor, run the following commands. 
+Once the compressor has been compiled, using 'make', it can be used as follows: 
 
 ```
-make
 ./gzoe < file_to_compress.txt > compressed_file.gz
 ```
 
